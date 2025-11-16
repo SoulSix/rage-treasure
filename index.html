@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Treasure Hunting Data</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Treasure Hunting Data</h1>
+    <label> Min group count: <input id="min-count-input" type="number" value="4" min="1" style="width:60px"></label>
+    <button id="apply-min-count" type="button">Apply</button>
+    <hr/>
+    <div id="legend"></div>
+    <div id="table-container"></div>
+    <hr/>
+    <p class="section-label">Manage</p>
+    <button id="reset-btn" type="button">Reset table</button>
+    <button id="clear-btn" type="button">Clear grid</button>
+    <hr/>
+    <p class="section-label">Import chunks</p>
+    <div id="chunk-grid">
+        <!-- Chunk 1 -->
+        <div class="chunk-box">
+            <textarea id="chunk1" class="chunk-textarea"></textarea>
+            <button id="import-chunk-1" class="chunk-btn">Import Chunk 1</button>
+        </div>
+
+        <!-- Chunk 2 -->
+        <div class="chunk-box">
+            <textarea id="chunk2" class="chunk-textarea"></textarea>
+            <button id="import-chunk-2" class="chunk-btn">Import Chunk 2</button>
+        </div>
+
+        <!-- Chunk 3 -->
+        <div class="chunk-box">
+            <textarea id="chunk3" class="chunk-textarea"></textarea>
+            <button id="import-chunk-3" class="chunk-btn">Import Chunk 3</button>
+        </div>
+
+        <!-- Chunk 4 -->
+        <div class="chunk-box">
+            <textarea id="chunk4" class="chunk-textarea"></textarea>
+            <button id="import-chunk-4" class="chunk-btn">Import Chunk 4</button>
+        </div>
+    </div>
+    <hr/>
+    <p class="section-label">Import full grid</p>
+    <button id="import-btn" type="button">Import JSON</button><br/>
+    <textarea id="import-input" rows="5" placeholder='Paste FULL GRID json data here'></textarea>
+
+    <div id="import-status"></div>
+    <hr/>
+    <p class="section-label">Export full grid</p>
+    <button id="export-btn" type="button">Export JSON</button><br/>
+    <textarea id="export-output" rows="5" readonly></textarea>
+    <script type="module" src="scripts/main.js"></script>
+</body>
+</html>
