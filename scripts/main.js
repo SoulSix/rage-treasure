@@ -4,11 +4,14 @@ import {recalculateGroups} from "./state.js";
 import {renderTable} from "./ui-table.js";
 import {applyMinCount, clearTable, renderLegend, resetTable} from "./ui-legend.js";
 import {exportTable} from "./export.js";
-import {importChunk, importDataFromStorage, importTable} from "./import.js";
+import {importChunk, tryImportStateFromStorage, tryImportStateFromQuery, importTable} from "./import.js";
 import {enableDropOnTextarea} from "./dnd.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    importDataFromStorage();
+    let queryImport = tryImportStateFromQuery();
+    if (!queryImport) {
+        tryImportStateFromStorage();
+    }
     recalculateGroups();
 
     renderTable();
@@ -28,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .onclick = importTable;
 
     document
-        .getElementById("apply-min-count")
+        .getElementById("apply-min-count-btn")
         .onclick = applyMinCount;
 
     document

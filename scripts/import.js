@@ -17,39 +17,34 @@ export function importTable() {
         return;
     }
 
-    let parsed;
     try {
-        parsed = JSON.parse(raw);
-    } catch {
-        if (statusEl) statusEl.textContent = "Import failed: invalid JSON.";
-        return;
-    }
+        const parsed = JSON.parse(raw);
 
-    const isValid =
-        Array.isArray(parsed) &&
-        parsed.every(
-            row =>
-                Array.isArray(row) &&
-                row.every(
-                    cell =>
-                        typeof cell === "string" ||
-                        cell === null ||
-                        cell === undefined
-                )
-        );
+        const isValid =
+            Array.isArray(parsed) &&
+            parsed.every(
+                row =>
+                    Array.isArray(row) &&
+                    row.every(
+                        cell =>
+                            typeof cell === "string" ||
+                            cell === null ||
+                            cell === undefined
+                    )
+            );
 
-    if (!isValid) {
-        if (statusEl) {
-            statusEl.textContent =
-                "Import failed: expected an array of arrays of strings.";
+        if (!isValid) {
+            console.warn("Table data from import textarea is invalid, ignoring.");
+            return;
         }
+
+        const normalized = parsed.map(row => row.map(v => (v == null ? "" : String(v))));
+        setData(normalized);
+        setOriginalData(normalized.map(row => [...row]));
+    } catch (e) {
+        console.warn("Failed to parse table data from import textarea:", e);
         return;
     }
-
-    parsed = parsed.map(row => row.map(v => (v == null ? "" : String(v))));
-
-    setData(parsed);
-    setOriginalData(parsed.map(row => [...row]));
 
     setActiveLegendValue(null);
     setHighlight(null);
@@ -108,7 +103,7 @@ export function importChunk(chunkData, chunkId) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-export function importDataFromStorage() {
+export function tryImportStateFromStorage() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return;
 
@@ -139,4 +134,48 @@ export function importDataFromStorage() {
     } catch (e) {
         console.warn("Failed to parse stored table data:", e);
     }
+}
+
+export function tryImportStateFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const encoded = params.get("state");
+    if (!encoded) return false; // no param
+
+    let jsonText;
+    try {
+        jsonText = LZString.decompressFromEncodedURIComponent(encoded);
+    } catch (e) {
+        console.warn("State param not valid base64:", e);
+        return false;
+    }
+
+    try {
+        const parsed = JSON.parse(jsonText);
+
+        const isValid =
+            Array.isArray(parsed) &&
+            parsed.every(
+                row =>
+                    Array.isArray(row) &&
+                    row.every(
+                        cell =>
+                            typeof cell === "string" ||
+                            cell === null ||
+                            cell === undefined
+                    )
+            );
+
+        if (!isValid) {
+            console.warn("Table data from query parameter is invalid, ignoring.");
+            return;
+        }
+
+        const normalized = parsed.map(row => row.map(v => (v == null ? "" : String(v))));
+        setData(normalized);
+        setOriginalData(normalized.map(row => [...row]));
+    } catch (e) {
+        console.warn("Failed to parse table data from query parameter:", e);
+        return false;
+    }
+    return true;
 }
