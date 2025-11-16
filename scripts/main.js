@@ -27,10 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .onclick = exportTable;
 
     document
-        .getElementById("import-btn")
-        .onclick = importTable;
-
-    document
         .getElementById("apply-min-count-btn")
         .onclick = applyMinCount;
 
