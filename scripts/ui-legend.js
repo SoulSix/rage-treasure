@@ -14,7 +14,8 @@ import {
     setData,
     setMinGroupCount,
     setOriginalData,
-    trimData
+    trimData,
+    STORAGE_KEY
 } from "./state.js";
 
 import {handleLegendClick, renderTable, setHighlight} from "./ui-table.js";
