@@ -35,25 +35,23 @@ document.addEventListener("DOMContentLoaded", () => {
         .getElementById("clear-btn")
         .onclick = clearTable;
 
-
-    const chunk1text = document.getElementById("chunk1").value;
-    const chunk2text = document.getElementById("chunk2").value;
-    const chunk3text = document.getElementById("chunk3").value;
-    const chunk4text = document.getElementById("chunk4").value;
-
     document.getElementById("import-chunk-1").onclick = () => {
+        const chunk1text = document.getElementById("chunk1").value;
         if (chunk1text) importChunk(chunk1text, 1);
     };
 
     document.getElementById("import-chunk-2").onclick = () => {
+        const chunk2text = document.getElementById("chunk2").value;
         if (chunk2text) importChunk(chunk2text, 2);
     };
 
     document.getElementById("import-chunk-3").onclick = () => {
+        const chunk3text = document.getElementById("chunk3").value;
         if (chunk3text) importChunk(chunk3text, 3);
     };
 
     document.getElementById("import-chunk-4").onclick = () => {
+        const chunk4text = document.getElementById("chunk4").value;
         if (chunk4text) importChunk(chunk4text, 4);
     };
 
